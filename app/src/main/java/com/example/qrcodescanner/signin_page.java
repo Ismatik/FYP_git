@@ -44,7 +44,7 @@ public class signin_page extends AppCompatActivity {
         //if logged in - we need to check
         if(fAuth.getCurrentUser() != null){
 
-            startActivity(new Intent(getApplicationContext() , profile_page.class));
+            startActivity(new Intent(getApplicationContext() , profile.class));
             finish();
         }
 
@@ -79,7 +79,7 @@ public class signin_page extends AppCompatActivity {
                         //display if created, otherwise it wont show
                         if(task.isSuccessful()){
                             Toast.makeText(signin_page.this, "User Created.", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext() , profile_page.class));
+                            startActivity(new Intent(getApplicationContext() , profile.class));
                         }
                         else {
                             Toast.makeText(signin_page.this, "Error! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
