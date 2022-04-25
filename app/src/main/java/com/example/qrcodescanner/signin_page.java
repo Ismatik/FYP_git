@@ -42,23 +42,28 @@ public class signin_page extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
 
         //if logged in - we need to check
-        if(fAuth.getCurrentUser() != null){
+//        if(fAuth.getCurrentUser() != null){
+//            startActivity(new Intent(getApplicationContext() , profile.class));
+//            finish();
+//        }
 
-            startActivity(new Intent(getApplicationContext() , profile.class));
-            finish();
-        }
 
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email = mEmail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
+                String name = mFullName.getText().toString().trim();
 
                 if(TextUtils.isEmpty(email)){
                     mEmail.setError("Email is Required");
                     return;
                 }
 
+                if (TextUtils.isEmpty(name)){
+                    mFullName.setError("Correct name is required");
+                    return;
+                }
                 if(TextUtils.isEmpty(password)){
                     mPassword.setError("Password is Required");
                     return;
@@ -83,6 +88,7 @@ public class signin_page extends AppCompatActivity {
                         }
                         else {
                             Toast.makeText(signin_page.this, "Error! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
                         }
                     }
                 });
