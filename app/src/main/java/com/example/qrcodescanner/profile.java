@@ -15,16 +15,18 @@ public class profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        Button scanner;
+        Button info_profile = findViewById(R.id.profileButton);
 
-        scanner = findViewById(R.id.scanButton);
-
-        scanner.setOnClickListener(new View.OnClickListener() {
+        info_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                startActivity(new Intent(getApplicationContext() , scan_page.class));
+                open_info_profile();
             }
         });
+    }
+
+    public void open_info_profile(){
+        Intent i = new Intent(this , info_activity.class);
+        startActivity(i);
     }
 }
