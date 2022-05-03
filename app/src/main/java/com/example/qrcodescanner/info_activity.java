@@ -1,57 +1,65 @@
 package com.example.qrcodescanner;
 
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserInfo;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 
 public class info_activity extends AppCompatActivity {
 
+    TextView name;
+    TextView email;
+    TextView phone;
 
-    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseAuth firebaseAuth;
+    FirebaseFirestore firebaseFirestore;
+    String UserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
-        String name = firebaseUser.getDisplayName();
-        String email = firebaseUser.getEmail();
-        String phone = firebaseUser.getPhoneNumber();
+        name = findViewById(R.id.textName);
+        email = findViewById(R.id.textEmail);
+        phone = findViewById(R.id.textPhone);
 
-//        boolean emailVerified = firebaseUser.isEmailVerified();
-        final TextView textViewToChange = findViewById(R.id.textName);
-        textViewToChange.setText(name);
-        final TextView textViewToChange2 = findViewById(R.id.textEmail);
-        textViewToChange2.setText(email);
-        final TextView textViewToChange3 = findViewById(R.id.textPhone);
-        textViewToChange3.setText(phone);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
-        if(firebaseUser != null){
-            for(UserInfo profile : firebaseUser.getProviderData()){
-//                String providerID = profile.getProviderId();
-//                String UserID = profile.getUid();
-                String name1;
-                name1 = profile.getDisplayName();
-                String email1;
-                email1 = profile.getEmail();
-                String phone1;
-                phone1 = profile.getPhoneNumber();
+        //Getting User's ID to get info from FireStore
+        UserID = firebaseAuth.getCurrentUser().getUid();
 
+        //Refering to the collection of FireStore
+        DocumentReference documentReference = firebaseFirestore.collection("Users").document(UserID);
 
-                textViewToChange.setText(name1);
-                textViewToChange2.setText(email1);
-                textViewToChange3.setText(phone1);
-
-//                textViewToChange.setText("No name saved");
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                name.setText(value.getString("Full Name"));
+                phone.setText(value.getString("Phone"));
+                email.setText(value.getString("Email"));
             }
-        }
+        });
+    }
 
+    //Set onClick in xml without creating a button
+    public void logout(View view){
+        FirebaseAuth.getInstance().signOut();//Logging Out
+        startActivity(new Intent(getApplicationContext() , login_page.class));
+        finish();
     }
 
 }
