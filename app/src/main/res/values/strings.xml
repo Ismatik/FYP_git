@@ -8,4 +8,5 @@
     <string name="enter_your_full_name">Enter your full name</string>
     <string name="phone_number">Phone number</string>
     <string name="register">Register</string>
+    <string name="zoom_default">zoom_default</string>
 </resources>

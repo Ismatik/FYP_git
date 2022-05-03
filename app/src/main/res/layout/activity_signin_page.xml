@@ -7,7 +7,7 @@
     tools:context=".signin_page">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textScan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/aleo_light"
@@ -31,7 +31,7 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textScan" />
 
     <EditText
         android:id="@+id/fullName"

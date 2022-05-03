@@ -48,51 +48,48 @@ public class signin_page extends AppCompatActivity {
 //        }
 
 
-        mRegisterBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String email = mEmail.getText().toString().trim();
-                String password = mPassword.getText().toString().trim();
-                String name = mFullName.getText().toString().trim();
+        mRegisterBtn.setOnClickListener(view -> {
+            String email = mEmail.getText().toString().trim();
+            String password = mPassword.getText().toString().trim();
+            String name = mFullName.getText().toString().trim();
 
-                if(TextUtils.isEmpty(email)){
-                    mEmail.setError("Email is Required");
-                    return;
-                }
-
-                if (TextUtils.isEmpty(name)){
-                    mFullName.setError("Correct name is required");
-                    return;
-                }
-                if(TextUtils.isEmpty(password)){
-                    mPassword.setError("Password is Required");
-                    return;
-                }
-
-                if(password.length() < 6){
-                    mPassword.setError("Password should be more than 5 characters.");
-                    return;
-                }
-
-                progressBar.setVisibility(View.VISIBLE);
-
-                // register the user in Firebase
-
-                fAuth.createUserWithEmailAndPassword(email , password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        //display if created, otherwise it wont show
-                        if(task.isSuccessful()){
-                            Toast.makeText(signin_page.this, "User Created.", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext() , profile.class));
-                        }
-                        else {
-                            Toast.makeText(signin_page.this, "Error! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.GONE);
-                        }
-                    }
-                });
+            if(TextUtils.isEmpty(email)){
+                mEmail.setError("Email is Required");
+                return;
             }
+
+            if (TextUtils.isEmpty(name)){
+                mFullName.setError("Correct name is required");
+                return;
+            }
+            if(TextUtils.isEmpty(password)){
+                mPassword.setError("Password is Required");
+                return;
+            }
+
+            if(password.length() < 6){
+                mPassword.setError("Password should be more than 5 characters.");
+                return;
+            }
+
+            progressBar.setVisibility(View.VISIBLE);
+
+            // register the user in Firebase
+
+            fAuth.createUserWithEmailAndPassword(email , password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    //display if created, otherwise it wont show
+                    if(task.isSuccessful()){
+                        Toast.makeText(signin_page.this, "User Created.", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext() , profile.class));
+                    }
+                    else {
+                        Toast.makeText(signin_page.this, "Error! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                    }
+                }
+            });
         });
     }
 

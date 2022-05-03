@@ -8,7 +8,7 @@
     android:onClick="onClick">
 
 <TextView
-    android:id="@+id/textView"
+    android:id="@+id/textScan"
     android:layout_width="230dp"
     android:layout_height="110dp"
     android:text="Inventory Management System"
@@ -30,7 +30,7 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="0.498"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/textView"
+    app:layout_constraintTop_toBottomOf="@+id/textScan"
     app:layout_constraintVertical_bias="0.46" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

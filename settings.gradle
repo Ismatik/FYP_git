@@ -10,6 +10,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven{url "https://download.dynamsoft.com/maven/dce/aar"}
+        maven{url "https://download.dynamsoft.com/maven/dbr/aar"}
+        maven { url 'https://jitpack.io' }
     }
 }
 rootProject.name = "QRCodeScanner"

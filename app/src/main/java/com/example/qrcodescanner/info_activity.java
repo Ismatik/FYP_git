@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 
+
 public class info_activity extends AppCompatActivity {
 
 
@@ -33,19 +34,24 @@ public class info_activity extends AppCompatActivity {
 
         if(firebaseUser != null){
             for(UserInfo profile : firebaseUser.getProviderData()){
-                String providerID = profile.getProviderId();
-
+//                String providerID = profile.getProviderId();
 //                String UserID = profile.getUid();
+                String name1;
+                name1 = profile.getDisplayName();
+                String email1;
+                email1 = profile.getEmail();
+                String phone1;
+                phone1 = profile.getPhoneNumber();
 
-                String name1 = profile.getDisplayName();
-                String email1 = profile.getEmail();
-                String phone1 = profile.getPhoneNumber();
 
                 textViewToChange.setText(name1);
                 textViewToChange2.setText(email1);
                 textViewToChange3.setText(phone1);
+
+//                textViewToChange.setText("No name saved");
             }
         }
+
     }
 
 }
