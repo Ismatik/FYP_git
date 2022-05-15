@@ -29,15 +29,14 @@
         android:layout_marginEnd="16dp"
         android:hint="User Name"
         android:textAlignment="center"
+        android:textColor="#63B8FF"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/textView3"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.115"
-        android:textColor="#63B8FF"
-        />
+        app:layout_constraintVertical_bias="0.115" />
 
     <TextView
         android:id="@+id/textView9"
@@ -45,15 +44,14 @@
         android:layout_height="25dp"
         android:text="Email"
         android:textAlignment="center"
+        android:textColor="#63B8FF"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.059"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="0.118"
-        android:textColor="#63B8FF"
-        />
+        app:layout_constraintVertical_bias="0.118" />
 
     <TextView
         android:id="@+id/textEmail"
@@ -103,13 +101,23 @@
         android:id="@+id/btnLogOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="logout"
         android:text="Log Out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.84"
-        android:onClick="logout"
-        />
+        app:layout_constraintVertical_bias="0.869" />
+
+    <Button
+        android:id="@+id/scanHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Scan History"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogOut"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.869" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -104,6 +104,13 @@ public class signin_page extends AppCompatActivity {
                         User.put("Full Name" , name);
                         User.put("Email" , email);
                         User.put("Phone" , phone);
+                        //Fields for scan
+                        String empty = "0";
+                        for(int i = 1; i < 15; i++){
+                            String textField = "Scan #";
+                            textField = textField + Integer.toString(i);
+                            User.put(textField , empty);
+                        }
                         //Inserting to FireStore
                         documentReference.set(User).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override

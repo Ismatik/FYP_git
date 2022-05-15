@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,11 +28,24 @@ public class info_activity extends AppCompatActivity {
     FirebaseFirestore firebaseFirestore;
     String UserID;
 
+    //Button Scan History
+    Button scanHistory;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
+        scanHistory = findViewById(R.id.scanHistory);
+
+        scanHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                open_scan_history();
+            }
+        });
+
+        //Retrieving info from FireStore
         name = findViewById(R.id.textName);
         email = findViewById(R.id.textEmail);
         phone = findViewById(R.id.textPhone);
@@ -62,4 +76,9 @@ public class info_activity extends AppCompatActivity {
         finish();
     }
 
+    //function to open Scan History page
+    public void open_scan_history(){
+        Intent scan_intent = new Intent(this , Scan_History.class);
+        startActivity(scan_intent);
+    }
 }
