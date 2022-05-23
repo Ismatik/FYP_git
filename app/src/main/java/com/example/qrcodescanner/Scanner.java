@@ -88,8 +88,8 @@ public class Scanner extends AppCompatActivity {
 
                         Toast toast = Toast.makeText(Scanner.this, result.getText(), Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER , 0 , -10);
-                        toast.show();
-                        text.setText(result.getText());
+//                        toast.show();
+//                        text.setText(result.getText());
 
                         UserID = firebaseAuth.getCurrentUser().getUid();
 

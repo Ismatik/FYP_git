@@ -16,6 +16,11 @@ public class result_of_scan extends AppCompatActivity {
         Intent i = getIntent();
         String result_of_scan = i.getStringExtra("Info took");
 
+        result_of_scan = result_of_scan.replace("{" , "");
+        result_of_scan = result_of_scan.replace("}" , "");
+        result_of_scan = result_of_scan.replace("\"" , "");
+        result_of_scan = result_of_scan.replace("," , "\n");
+
         textView_scan_result.setText(result_of_scan);
 //        Bundle extras = getIntent().getExtras();
 //        if(extras != null){

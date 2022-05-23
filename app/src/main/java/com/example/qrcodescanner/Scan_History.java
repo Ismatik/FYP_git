@@ -1,20 +1,26 @@
 package com.example.qrcodescanner;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,16 +54,25 @@ public class Scan_History extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        DocumentReference documentReference = firebaseFirestore.collection("Users").document(UserID);
+        UserID = firebaseAuth.getCurrentUser().getUid();
 
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                for (int i = 1; i < 15; i ++) {
-                    scanHistoryList.add(value.getString("Scan #" + Integer.toString(i)));
-                    arrayAdapter.notifyDataSetChanged();
-                }
-            }
-        });
+        DocumentReference  database = firebaseFirestore.collection("Users").document(UserID);
+
+       database.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+           @Override
+           public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+               if(task.isSuccessful()){
+                   DocumentSnapshot documentSnapshot = task.getResult();
+                   if(documentSnapshot.exists()){
+                       Log.d("Document" , documentSnapshot.getData().toString());
+                       scanHistoryList.add(documentSnapshot.getData().toString());
+                       arrayAdapter.notifyDataSetChanged();
+                   }
+                   else{
+                       Log.d("Document" , "No data");
+                   }
+               }
+           }
+       });
     }
 }

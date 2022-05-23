@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:textAlignment="center"
     tools:context=".result_of_scan">
 
     <TextView
         android:id="@+id/result_scan"
-        android:layout_width="227dp"
-        android:layout_height="347dp"
+        android:layout_width="338dp"
+        android:layout_height="608dp"
         android:text="Result"
         android:textColor="#63B8FF"
         android:textSize="34sp"
