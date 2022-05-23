@@ -40,9 +40,11 @@ public class Scan_History extends AppCompatActivity {
         listView = findViewById(R.id.id_list_view);
 
         listView.setAdapter(arrayAdapter);
+
+        addScanInfo();
     }
 
-    public void addScanInfo(View view){
+    public void addScanInfo(){
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 

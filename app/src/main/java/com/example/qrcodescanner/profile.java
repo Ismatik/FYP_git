@@ -48,6 +48,20 @@ public class profile extends AppCompatActivity {
 
     }
 
+    private boolean checkpermissions(){
+        List<String> listofpermissions = new ArrayList<>();
+        for (String permission: permissions){
+            if(ContextCompat.checkSelfPermission(getApplicationContext(), permission) != PackageManager.PERMISSION_GRANTED){
+                listofpermissions.add(permission);
+            }
+        }
+        if(!listofpermissions.isEmpty()){
+            ActivityCompat.requestPermissions(this, listofpermissions.toArray(new String[listofpermissions.size()]), 11);
+            return false;
+        }
+        return true;
+    }
+
     public void open_info_profile(){
         Intent i = new Intent(this , info_activity.class);
         startActivity(i);
@@ -58,17 +72,4 @@ public class profile extends AppCompatActivity {
         startActivity(i);
     }
 
-    private boolean checkpermissions(){
-        List<String> listofpermissions = new ArrayList<>();
-        for( String perm: permissions ){
-            if (ContextCompat.checkSelfPermission(getApplicationContext(), perm) != PackageManager.PERMISSION_GRANTED){
-                listofpermissions.add(perm);
-            }
-        }
-        if(!listofpermissions.isEmpty()){
-            ActivityCompat.requestPermissions(this , listofpermissions.toArray(new String[listofpermissions.size()]) , PERM_CODE);
-            return false;
-        }
-        return true;
-    }
 }

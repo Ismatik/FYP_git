@@ -22,6 +22,8 @@
         app:frameThickness="2dp"
         app:maskColor="#77000000" />
 
+
+
     <TextView
         android:id="@+id/textViewscan"
         android:layout_width="match_parent"

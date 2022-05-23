@@ -4,9 +4,17 @@ package com.example.qrcodescanner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,12 +37,22 @@ import com.google.firebase.firestore.Source;
 import com.google.firebase.firestore.auth.User;
 import com.google.zxing.Result;
 //Date time
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Scanner extends AppCompatActivity {
+
+//    String[] permissions = {
+//            Manifest.permission.CAMERA
+//    };
+
+//    int PERM_CODE = 111;
+
+
     private CodeScanner mCodeScanner;
     private TextView text;
 
@@ -53,6 +71,7 @@ public class Scanner extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
+
         //date and time
         date_and_time = Calendar.getInstance().getTime();
 
@@ -66,25 +85,34 @@ public class Scanner extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Integer number = 1;
-                        Toast.makeText(Scanner.this, result.getText(), Toast.LENGTH_SHORT).show();
+
+                        Toast toast = Toast.makeText(Scanner.this, result.getText(), Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER , 0 , -10);
+                        toast.show();
                         text.setText(result.getText());
 
-                        DocumentReference documentReference = firebaseFirestore.collection("Users").document(UserID);
-                        String textField = "Scan #";
-                        for(int i = 1; i < 15; i++) {
-                            textField = textField + Integer.toString(i);
-                            if((documentReference.get(Source.valueOf(textField))).equals("0")){
-                                documentReference.update(textField, result.getText());
-                            }
-                        }
-//                        UserID = firebaseAuth.getCurrentUser().getUid();
-//                        DocumentReference documentReference = firebaseFirestore.collection("Users").document(UserID);
-//                        //https://firebase.google.com/docs/firestore/manage-data/add-data#java_2
-//                        Map<String , Object> User = new HashMap<>();
-//                        User.put("Scan #1" , result.getText());
-//                        documentReference.collection("Users").document(UserID).set(User, SetOptions.merge());
+                        UserID = firebaseAuth.getCurrentUser().getUid();
 
+                        DocumentReference database = firebaseFirestore.collection("Users").document(UserID);
+                        String textField = "Scan " + date_and_time;
+                        Map<String, Object> data = new HashMap<>();
+                        data.put(textField, result.getText());
+                        open_result_page(result.getText());
+//                        database.collection("Users").document(UserID).set(textField , SetOptions.merge());
+
+                        database.update(textField , result.getText()).
+                                addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.d("TAG" , "Added");
+                            }
+                        })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w("TAG" , "Error ", e);
+                                    }
+                                });
                     }
                 });
             }
@@ -98,6 +126,14 @@ public class Scanner extends AppCompatActivity {
                 mCodeScanner.startPreview();
             }
         });
+
+
+    }
+
+    private void open_result_page(String result) {
+        Intent intent = new Intent(getApplicationContext() , result_of_scan.class);
+        intent.putExtra("Info took" , result);
+        startActivity(intent);
     }
 
     @Override
@@ -116,5 +152,46 @@ public class Scanner extends AppCompatActivity {
         mCodeScanner.startPreview();
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    private boolean checkpermissions(){
+//        List<String> listofpermissions = new ArrayList<>();
+//        for (String permission: permissions){
+//            if(ContextCompat.checkSelfPermission(getApplicationContext(), permission) != PackageManager.PERMISSION_GRANTED){
+//                listofpermissions.add(permission);
+//            }
+//        }
+//        if(!listofpermissions.isEmpty()){
+//            ActivityCompat.requestPermissions(this, listofpermissions.toArray(new String[listofpermissions.size()]), 11);
+//            return false;
+//        }
+//        return true;
+//    }
+
+//                        DocumentReference documentReference = firebaseFirestore.collection("Users").document(UserID);
+//                        String textField = "Scan " + date_and_time;
+//                        Map<String, Object> data = new HashMap<>();
+//                        data.put(textField, result.getText());
+//
+//                        documentReference.collection("Users").document(UserID).set(textField , SetOptions.merge());
+//                        DocumentReference documentReference = firebaseFirestore.collection("Users").document(UserID);
+//                        String textField = "Scan #";
+//                        for(int i = 1; i < 15; i++) {
+//                            textField = textField + Integer.toString(i);
+//                            if((documentReference.get(Source.valueOf(textField))).equals("0")){
+//                                documentReference.update(textField, result.getText());
+//                            }
+//                        }
 
 }
