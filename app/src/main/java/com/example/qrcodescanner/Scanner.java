@@ -94,7 +94,7 @@ public class Scanner extends AppCompatActivity {
                         UserID = firebaseAuth.getCurrentUser().getUid();
 
                         DocumentReference database = firebaseFirestore.collection("Users").document(UserID);
-                        String textField = "Scan " + date_and_time;
+                        String textField = " " + date_and_time;
                         Map<String, Object> data = new HashMap<>();
                         data.put(textField, result.getText());
                         open_result_page(result.getText());
